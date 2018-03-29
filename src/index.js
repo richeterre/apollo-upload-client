@@ -8,6 +8,7 @@ import {
   parseAndCheckHttpResponse
 } from 'apollo-link-http-common'
 import extractFiles from 'extract-files'
+import set from 'lodash.set'
 
 export { ReactNativeFile } from 'extract-files'
 
@@ -44,29 +45,32 @@ export const createUploadLink = ({
     )
 
     const files = extractFiles(body)
-    const payload = serializeFetchParameter(body, 'Payload')
+
+    files.forEach((file, index) => {
+      file.index = (index + 1).toString()
+      set(body, file.path, file.index)
+    })
 
     if (files.length) {
       // Automatically set by fetch when the body is a FormData instance.
       delete options.headers['content-type']
 
-      // GraphQL multipart request spec:
-      // https://github.com/jaydenseric/graphql-multipart-request-spec
+      // Format body for Absinthe GraphQL, NOT according to GraphQL multipart request spec
+      // (see https://github.com/absinthe-graphql/absinthe_plug/issues/114)
       options.body = new FormData()
-      options.body.append('operations', payload)
-      options.body.append(
-        'map',
-        JSON.stringify(
-          files.reduce((map, { path }, index) => {
-            map[`${index}`] = [path]
-            return map
-          }, {})
-        )
-      )
-      files.forEach(({ file }, index) =>
+
+      const { query, operationName, variables } = body
+      options.body.append('query', query)
+      options.body.append('operationName', operationName)
+      options.body.append('variables', JSON.stringify(variables))
+
+      files.forEach(({ file, index }) =>
         options.body.append(index, file, file.name)
       )
-    } else options.body = payload
+    } else {
+      const payload = serializeFetchParameter(body, 'Payload')
+      options.body = payload
+    }
 
     return new Observable(observer => {
       // Allow aborting fetch, if supported.

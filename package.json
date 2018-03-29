@@ -1,8 +1,8 @@
 {
-  "name": "apollo-upload-client",
+  "name": "@richeterre/apollo-upload-client",
   "version": "8.0.0",
   "description":
-    "Enhances Apollo Client for intuitive file uploads via GraphQL mutations.",
+    "Enhances Apollo Client for intuitive file uploads via GraphQL mutations, in a format compatible with Absinthe GraphQL.",
   "license": "MIT",
   "author": {
     "name": "Jayden Seric",
@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jaydenseric/apollo-upload-client.git"
+    "url": "https://github.com/richeterre/apollo-upload-client.git"
   },
-  "homepage": "https://github.com/jaydenseric/apollo-upload-client#readme",
-  "bugs": "https://github.com/jaydenseric/apollo-upload-client/issues",
+  "homepage": "https://github.com/richeterre/apollo-upload-client#readme",
+  "bugs": "https://github.com/richeterre/apollo-upload-client/issues",
   "keywords": [
     "apollo",
     "client",
@@ -24,7 +24,8 @@
     "upload",
     "multipart",
     "react",
-    "native"
+    "native",
+    "absinthe"
   ],
   "files": ["lib"],
   "main": "lib/main",
@@ -36,7 +37,8 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.40",
     "apollo-link-http-common": "^0.2.3",
-    "extract-files": "^3.1.0"
+    "extract-files": "^3.1.0",
+    "lodash.set": "^4.3.2"
   },
   "peerDependencies": {
     "apollo-link": "^1.0.0"
