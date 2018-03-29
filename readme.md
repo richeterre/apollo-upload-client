@@ -2,6 +2,8 @@
 
 # apollo-upload-client
 
+[![npm version](https://img.shields.io/npm/v/@richeterre/apollo-upload-client.svg)](https://npm.im/@richeterre/apollo-upload-client)
+
 **This fork modifies the request format to support Absinthe's way of handling file uploads.**
 
 Enhances [Apollo](https://apollographql.com) for intuitive file uploads via GraphQL queries or mutations. Use with the [Absinthe](https://absinthe-graphql.org) library for Elixir.
